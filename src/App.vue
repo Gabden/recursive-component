@@ -1,6 +1,41 @@
 <template>
   <div id="vue-app">
-    <FileTree :root="root" @expand="changeExpand" />
+    <FileTree
+      :root="{
+        name: 'foo',
+        type: 'dir',
+        children: [
+          {
+            name: 'bar',
+            type: 'dir',
+            children: [
+              {
+                name: 'corge',
+                type: 'file',
+              },
+            ],
+          },
+          {
+            name: 'baz',
+            type: 'dir',
+            children: [
+              {
+                name: 'bar',
+                type: 'file',
+              },
+            ],
+          },
+          {
+            name: 'quux',
+            type: 'file',
+          },
+          {
+            name: 'grault',
+            type: 'file',
+          },
+        ],
+      }"
+    />
   </div>
 </template>
 
@@ -11,66 +46,6 @@ export default {
   name: "vue-app",
   components: {
     FileTree,
-  },
-  methods: {
-    mutateObjectProperty(name, newValue, obj) {
-      Object.keys(obj).forEach((key) => {
-        if (
-          obj[key] === name &&
-          Object.prototype.hasOwnProperty.call(obj, "isExpanded")
-        ) {
-          obj.isExpanded = newValue;
-        } else if (key === "children") {
-          obj[key].forEach((child) => {
-            this.mutateObjectProperty(name, newValue, child);
-          });
-        }
-      });
-    },
-    changeExpand(data) {
-      this.mutateObjectProperty(data.name, data.isExpanded, this.root);
-    },
-  },
-  data() {
-    return {
-      root: {
-        name: "foo",
-        type: "dir",
-        isExpanded: false,
-        children: [
-          {
-            name: "bar",
-            type: "dir",
-            isExpanded: false,
-            children: [
-              {
-                name: "corge",
-                type: "file",
-              },
-            ],
-          },
-          {
-            name: "baz",
-            type: "dir",
-            isExpanded: false,
-            children: [
-              {
-                name: "bar",
-                type: "file",
-              },
-            ],
-          },
-          {
-            name: "quux",
-            type: "file",
-          },
-          {
-            name: "grault",
-            type: "file",
-          },
-        ],
-      },
-    };
   },
 };
 </script>

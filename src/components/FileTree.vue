@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="directory-list">
-      <node-tree :node="root" @expand="changeExpand"></node-tree>
+      <node-tree :node="root"></node-tree>
     </ul>
   </div>
 </template>
@@ -16,11 +16,6 @@ export default {
     root: {
       type: Object,
       required: true,
-    },
-  },
-  methods: {
-    changeExpand(data) {
-      this.$emit("expand", data);
     },
   },
 };

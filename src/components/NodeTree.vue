@@ -1,6 +1,9 @@
 <template>
-  <li :class="isFolder ? 'node folder' : 'file'">
-    <div :class="isFolder ? 'cursor dir-expand' : null" @click="changeExpand">
+  <li class="node" :class="isFolder ? 'folder' : 'file'">
+    <div
+      :class="isFolder ? 'dir-expand cursor' : null"
+      @click="isExpanded = !isExpanded"
+    >
       <p>
         {{ node.name }}
       </p>
@@ -8,13 +11,12 @@
 
     <ul
       class="directory-list"
-      v-if="node.isExpanded && node.children && node.children.length"
+      v-if="isExpanded && node.children && node.children.length"
     >
       <node
         v-for="child in node.children"
         :node="child"
         :key="child.name"
-        @expand="changeExpandChild"
       ></node>
     </ul>
   </li>
@@ -31,16 +33,10 @@ export default {
   props: {
     node: Object,
   },
-  methods: {
-    changeExpand() {
-      this.$emit("expand", {
-        name: this.node.name,
-        isExpanded: !this.node.isExpanded,
-      });
-    },
-    changeExpandChild(data) {
-      this.$emit("expand", data);
-    },
+  data() {
+    return {
+      isExpanded: false,
+    };
   },
 };
 </script>
